@@ -7,7 +7,7 @@ A Python program that works on Mac and Linux which fetches the daily Bing wallpa
 
 ## Dependencies
 
-- [ascii-image-converter](https://github.com/nikhilkumarsingh/ascii-image-converter)
+- [ascii-image-converter](https://github.com/TheZoraiz/ascii-image-converter)
 - [requests](https://pypi.org/project/requests/)
 
 ## Installation
