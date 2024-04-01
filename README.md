@@ -18,6 +18,5 @@ Install `requests` via pip:
 pip install requests
 ```
 Install ascii-image-converter:
-```
  [ascii-image-converter](https://github.com/nikhilkumarsingh/ascii-image-converter)
-```
+
