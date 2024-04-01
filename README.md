@@ -20,3 +20,16 @@ pip install requests
 Install ascii-image-converter:
  [ascii-image-converter](https://github.com/nikhilkumarsingh/ascii-image-converter)
 
+ Clone the repository:
+ ```bash
+git clone https://github.com/widkit/greetings
+```
+## Using the script
+ ```bash
+cd greetings
+```
+ ```bash
+python3 main.py
+```
+
+
