@@ -33,6 +33,8 @@ python3 main.py
 ```
 ## Tips
 
+- You can save the daily images by uncommenting `save_images = True` at line 8.
+
 - You can change the value of `ascii-image-converter` in line 42 of `main.py`, which alters the output.
   Here's the manual for `ascii-image-converter`:
   
