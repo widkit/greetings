@@ -5,7 +5,7 @@ import requests
 
 save_images = False
 # Uncomment below to save the images
-save_images = True
+# save_images = True
 
 
 # Check if "ascii-image-converter" is installed.
