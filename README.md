@@ -16,7 +16,7 @@ A Python program that works on Mac, Linux and Windows which fetches the daily Bi
   
 
 ## Installation
-Install `requests` via pip:
+Install `requests` and `pytz` via pip:
 
 ```bash
 pip install requests pytz
