@@ -9,6 +9,7 @@ A Python program that works on Mac, Linux and Windows which fetches the daily Bi
 
 * [ascii-image-converter](https://github.com/TheZoraiz/ascii-image-converter)
 * [requests](https://pypi.org/project/requests/)
+* [pytz](https://github.com/stub42/pytz)
 
 ## Recommended
 * Terminal supporting 24-bit or 8-bit color (Highly Recommended)
@@ -18,7 +19,7 @@ A Python program that works on Mac, Linux and Windows which fetches the daily Bi
 Install `requests` via pip:
 
 ```bash
-pip install requests
+pip install requests pytz
 ```
 Install ascii-image-converter:
  [ascii-image-converter](https://github.com/nikhilkumarsingh/ascii-image-converter)
