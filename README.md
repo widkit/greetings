@@ -23,6 +23,8 @@ pip install requests pytz
 ```
 Install ascii-image-converter:
 [ascii-image-converter](https://github.com/TheZoraiz/ascii-image-converter)
+
+
  Clone the repository:
  ```bash
 git clone https://github.com/widkit/greetings
