@@ -7,11 +7,14 @@ A Python program that works on Mac, Linux and Windows which fetches the daily Bi
 
 ## Dependencies
 
-- [ascii-image-converter](https://github.com/TheZoraiz/ascii-image-converter)
-- [requests](https://pypi.org/project/requests/)
+* [ascii-image-converter](https://github.com/TheZoraiz/ascii-image-converter)
+* [requests](https://pypi.org/project/requests/)
+
+## Recommended
+* Terminal supporting 24-bit or 8-bit color (Highly Recommended)
+  
 
 ## Installation
-
 Install `requests` via pip:
 
 ```bash
