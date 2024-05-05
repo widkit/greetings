@@ -22,8 +22,7 @@ Install `requests` and `pytz` via pip:
 pip install requests pytz
 ```
 Install ascii-image-converter:
- [ascii-image-converter](https://github.com/nikhilkumarsingh/ascii-image-converter)
-
+[ascii-image-converter](https://github.com/TheZoraiz/ascii-image-converter)
  Clone the repository:
  ```bash
 git clone https://github.com/widkit/greetings
