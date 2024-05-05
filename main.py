@@ -58,7 +58,7 @@ if f.read() != date_utc:
    f.close()
 
 # Convert the image to colorful ASCII using ascii-image-converter and print it.
-os.system(f"ascii-image-converter --color --color-bg {image_file}")
+os.system(f"ascii-image-converter -b --color --color-bg {image_file}")
 
 
 
