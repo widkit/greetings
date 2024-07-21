@@ -25,6 +25,7 @@ date_dir_file = config_dir + "/date.txt"
 if not os.path.exists(config_dir):
     print(f"Creating files at: {config_dir}")
     os.makedirs(config_dir)
+    os.makedirs(config_dir + "/images")
     open(date_dir_file, 'w').close()
 
 # Assign today's date to a variable (in UTC, bing refreshes their wallpapers by UTC)
@@ -35,7 +36,7 @@ date_utc = str(utc_date).replace("-", "_")
 
 # Check if the save_images is enabled.
 if save_images == True:
-    image_file = config_dir + f"/image_{date_utc}.jpg"
+    image_file = config_dir + f"/images/image_{date_utc}.jpg"
 elif save_images == False:
     image_file = config_dir + "/image.jpg"
 
