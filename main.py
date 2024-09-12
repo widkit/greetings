@@ -4,7 +4,6 @@ import subprocess
 import requests
 import pytz
 
-save_images = False
 # Uncomment below to save the images
 save_images = True
 
@@ -35,9 +34,9 @@ date_utc = str(utc_date).replace("-", "_")
 
 
 # Check if the save_images is enabled.
-if save_images == True:
+if save_images:
     image_file = config_dir + f"/images/image_{date_utc}.jpg"
-elif save_images == False:
+elif not save_images:
     image_file = config_dir + "/image.jpg"
 
 
@@ -46,7 +45,8 @@ elif save_images == False:
 f = open(date_dir_file, "r")
 if f.read() != date_utc:
    f.close()
-   if save_images != True:
+   if not save_images:
+       # noinspection PyUnboundLocalVariable
        if os.path.isfile(image_file):
            os.remove(image_file)
    res = requests.get('https://bing.biturl.top/')
