@@ -9,10 +9,11 @@ save_images = True
 
 
 # Check if "ascii-image-converter" is installed.
-dep_check = subprocess.call(['which', 'ascii-image-converter'], stdout=subprocess.DEVNULL)
-if dep_check != 0:
-    print('ascii-image-converter is not installed or not in $PATH.')
-    exit()
+if os.name == 'nt':  # For Windows
+    dep_check = subprocess.call(['where', 'ascii-image-converter'], stdout=subprocess.DEVNULL)
+else:  # For Unix-based systems
+    dep_check = subprocess.call(['which', 'ascii-image-converter'], stdout=subprocess.DEVNULL)
+
 
 # Get the home directory
 home_dir = os.path.expanduser("~")
