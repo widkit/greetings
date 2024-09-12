@@ -36,6 +36,24 @@ cd greetings
  ```bash
 python3 main.py
 ```
+
+## Using as a color script (runs at shell start-up)
+# Windows
+Create and edit a PowerShell profile:
+```
+notepad $PROFILE
+```
+Add the following line at the top:
+```
+python "PATH-TO-FILE.py"
+```
+Replace the path with the file path itself.
+# Unix (Mac, Linux)
+Add line to your shell profile:
+```
+python "PATH-TO-FILE.py"
+```
+
 ## Tips
 
 - You can save the daily images by uncommenting `save_images = True` at line 8.
