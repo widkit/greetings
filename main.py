@@ -10,9 +10,9 @@ save_images = True
 
 # Check if "ascii-image-converter" is installed.
 if os.name == 'nt':  # For Windows
-    dep_check = subprocess.call(['where', 'ascii-image-converter'], stdout=subprocess.DEVNULL)
+    subprocess.call(['where', 'ascii-image-converter'], stdout=subprocess.DEVNULL)
 else:  # For Unix-based systems
-    dep_check = subprocess.call(['which', 'ascii-image-converter'], stdout=subprocess.DEVNULL)
+    subprocess.call(['which', 'ascii-image-converter'], stdout=subprocess.DEVNULL)
 
 
 # Get the home directory
