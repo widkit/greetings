@@ -5,6 +5,8 @@
 
 A Python program that works on Mac, Linux and Windows which fetches the daily Bing wallpaper and converts it into colorful ASCII art. It may be used with shells as a color script, as seen in DistroTube's Youtube channel.
 
+![greetings](https://github.com/user-attachments/assets/507ac856-4298-4fb6-ae2c-14ece783654b)
+
 ## Dependencies
 
 * [ascii-image-converter](https://github.com/TheZoraiz/ascii-image-converter)
