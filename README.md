@@ -30,10 +30,12 @@ Install `requests` and `pytz` via pip:
 ```bash
 pip install -r requirements.txt
 ```
-## Using the script
- ```bash
-cd greetings
+Install `requests` and `pytz` via pip:
+
+```bash
+pip install -r requirements.txt
 ```
+## Using the script
  ```bash
 python3 main.py
 ```
