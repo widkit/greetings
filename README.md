@@ -1,4 +1,4 @@
-# Greetings - Daily Bing Wallpaper ASCII Art
+# greetings
 
 ![Python Version](https://img.shields.io/badge/python-3.7%20%7C%203.8-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
@@ -9,7 +9,7 @@ A Python program that works on Mac, Linux and Windows which fetches the daily Bi
 
 ## Dependencies
 
-* [ascii-image-converter](https://github.com/TheZoraiz/ascii-image-converter)
+* [ascii-image-converter](https://github.com/TheZoraiz/ascii-image-converter) (bundled with the project)
 * [requests](https://pypi.org/project/requests/)
 * [pytz](https://github.com/stub42/pytz)
 
@@ -19,7 +19,7 @@ A Python program that works on Mac, Linux and Windows which fetches the daily Bi
 ## Installation
 
 Clone the repository:
- ```bash
+```bash
 git clone https://github.com/widkit/greetings
 ```
 cd into `greetings`:
@@ -33,7 +33,7 @@ Install `requests` and `pytz` via pip:
 pip install -r requirements.txt
 ```
 ## Using the script
- ```bash
+```bash
 python3 main.py
 ```
 
@@ -47,22 +47,45 @@ Add the following line at the top:
 ```
 python "PATH-TO-FILE.py"
 ```
-Replace the path with the file path itself.
+Replace the path with the absolute path to main.py.
+
 ### Unix (Mac, Linux)
-Add line to your shell profile:
+Add line to your shell profile (~/.bashrc, ~/.zshrc, etc.):
 ```
 python "PATH-TO-FILE.py"
 ```
 
 ## Tips
 
-- You can save the daily images by uncommenting `save_images = True`.
+- You can save the daily images by uncommenting `save_images = True` in main.py.
+- Images are cached in ~/.config/greetings/ to avoid unnecessary downloads.
+- The script automatically detects your OS and architecture to use the correct binary.
 
-- You can change the parameters of `ascii-image-converter` in `main.py`, which alters the output.
-Manpage for `ascii-image-converter`:
-  
+## Customization
+
+You can change the parameters of `ascii-image-converter` in `main.py` to alter the output. Here are some useful flags:
+
 ```
-  ascii-image-converter [image paths/urls or piped stdin] [flags]
+ascii-image-converter [image paths/urls or piped stdin] [flags]
+
+Common flags:
+  -C, --color             Display ascii art with original colors
+  -b, --braille          Use braille characters instead of ascii
+  -d, --dimensions       Set width and height (e.g. -d 60,30)
+  -f, --full            Use largest dimensions that fill terminal width
+  -g, --grayscale       Display grayscale ascii art
+  -c, --complex         Display ascii characters in larger range
+```
+
+For all available options, see the [full manpage below](#full-manpage).
+
+## Full Manpage
+
+<details>
+<summary>Click to expand full ascii-image-converter manual</summary>
+
+```
+ascii-image-converter [image paths/urls or piped stdin] [flags]
 
 Flags:
   -C, --color             Display ascii art with original colors
@@ -164,7 +187,6 @@ Flags:
   -h, --help              Help for ascii-image-converter
                           
   -v, --version           Version for ascii-image-converter
-
-
 ```
+</details>
 
