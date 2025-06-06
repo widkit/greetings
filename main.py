@@ -3,22 +3,48 @@ import os
 import subprocess
 import requests
 import pytz
+import platform
 
 # Uncomment below to save the images
 save_images = True
 
-# Check if "ascii-image-converter" is installed.
-if os.name == 'nt':  # For Windows
-    try:
-        subprocess.run(['where', 'ascii-image-converter'], check=True, stdout=subprocess.DEVNULL)
-    except subprocess.CalledProcessError:
-        print("ascii-image-converter is not installed. Please install it to use this script.")
-        exit(1) 
-else:  # For Unix-based systems
-    try:
-        subprocess.run(['which', 'ascii-image-converter'], check=True, stdout=subprocess.DEVNULL)
-    except subprocess.CalledProcessError:
-        print("ascii-image-converter is not installed. Please install it to use this script.")
+# Detect the operating system and architecture to select the correct binary for ascii-image-converter
+system = platform.system()
+machine = platform.machine()
+
+match system:
+    case 'Windows':
+        match machine:
+            case 'AMD64' | 'x86_64':
+                ascii_image_converter_bin = "./bin/windows/amd64/ascii-image-converter.exe"
+            case 'ARM64':
+                ascii_image_converter_bin = "./bin/windows/arm64/ascii-image-converter.exe"
+            case _: 
+                print(f"Unknown Windows architecture '{machine}'.")
+                exit(1)
+
+    case 'Darwin': # macOS
+        match machine:
+            case 'x86_64': # Intel 
+                ascii_image_converter_bin = "./bin/macos/amd64/ascii-image-converter"
+            case 'arm64': # Apple Silicon
+                ascii_image_converter_bin = "./bin/macos/arm64/ascii-image-converter"
+            case _: 
+                print(f"Unknown macOS architecture '{machine}'.")
+                exit(1)
+
+    case 'Linux':
+        match machine:
+            case 'x86_64': 
+                ascii_image_converter_bin = "./bin/linux/amd64/ascii-image-converter"
+            case 'aarch64' | 'arm64': 
+                ascii_image_converter_bin = "./bin/linux/arm64/ascii-image-converter"
+            case _: 
+                print(f"Unknown Linux architecture '{machine}'.")
+                exit(1)
+
+    case _:
+        print(f"Unsupported operating system '{system}'.")
         exit(1)
 
 # Get the home directory
@@ -63,7 +89,7 @@ if f.read() != date_utc:
    f.close()
 
 # Convert the image to colorful ASCII using ascii-image-converter and print it.
-os.system(f"ascii-image-converter -b --color --color-bg {image_file}")
+os.system(f"{ascii_image_converter_bin} -b --color --color-bg {image_file}")
 
 
 
