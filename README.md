@@ -16,20 +16,19 @@ A Python program that works on Mac, Linux and Windows which fetches the daily Bi
 ## Recommended
 * Terminal supporting 24-bit or 8-bit color (Highly Recommended)
   
-
 ## Installation
-Install `requests` and `pytz` via pip:
 
-```bash
-pip install -r requirements.txt
-```
 Install ascii-image-converter:
 [ascii-image-converter](https://github.com/TheZoraiz/ascii-image-converter)
-
 
  Clone the repository:
  ```bash
 git clone https://github.com/widkit/greetings
+```
+Install `requests` and `pytz` via pip:
+
+```bash
+pip install -r requirements.txt
 ```
 ## Using the script
  ```bash
