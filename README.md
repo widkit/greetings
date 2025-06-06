@@ -21,7 +21,7 @@ A Python program that works on Mac, Linux and Windows which fetches the daily Bi
 Install `requests` and `pytz` via pip:
 
 ```bash
-pip install requests pytz
+pip install -r requirements.txt
 ```
 Install ascii-image-converter:
 [ascii-image-converter](https://github.com/TheZoraiz/ascii-image-converter)
