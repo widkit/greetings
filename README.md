@@ -25,10 +25,10 @@ Install ascii-image-converter:
  ```bash
 git clone https://github.com/widkit/greetings
 ```
-Install `requests` and `pytz` via pip:
+cd into `greetings`:
 
 ```bash
-pip install -r requirements.txt
+cd greetings
 ```
 Install `requests` and `pytz` via pip:
 
