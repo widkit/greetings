@@ -7,13 +7,19 @@ import pytz
 # Uncomment below to save the images
 save_images = True
 
-
 # Check if "ascii-image-converter" is installed.
 if os.name == 'nt':  # For Windows
-    subprocess.call(['where', 'ascii-image-converter'], stdout=subprocess.DEVNULL)
+    try:
+        subprocess.run(['where', 'ascii-image-converter'], check=True, stdout=subprocess.DEVNULL)
+    except subprocess.CalledProcessError:
+        print("ascii-image-converter is not installed. Please install it to use this script.")
+        exit(1) 
 else:  # For Unix-based systems
-    subprocess.call(['which', 'ascii-image-converter'], stdout=subprocess.DEVNULL)
-
+    try:
+        subprocess.run(['which', 'ascii-image-converter'], check=True, stdout=subprocess.DEVNULL)
+    except subprocess.CalledProcessError:
+        print("ascii-image-converter is not installed. Please install it to use this script.")
+        exit(1)
 
 # Get the home directory
 home_dir = os.path.expanduser("~")
@@ -33,14 +39,11 @@ utc_now = datetime.now(pytz.utc)
 utc_date = utc_now.date()
 date_utc = str(utc_date).replace("-", "_")
 
-
 # Check if the save_images is enabled.
 if save_images:
     image_file = config_dir + f"/images/image_{date_utc}.jpg"
 elif not save_images:
     image_file = config_dir + "/image.jpg"
-
-
 
 # Check if date is equal to last used date of the script. If not, fetch the new image.
 f = open(date_dir_file, "r")
