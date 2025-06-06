@@ -2,21 +2,41 @@
 
 ![Python Version](https://img.shields.io/badge/python-3.7%20%7C%203.8-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
+![Release](https://img.shields.io/github/v/release/widkit/greetings)
 
 A Python program that works on Mac, Linux and Windows which fetches the daily Bing wallpaper and converts it into colorful ASCII art. It may be used with shells as a color script, as seen in DistroTube's Youtube channel.
 
 ![greetings](https://github.com/user-attachments/assets/507ac856-4298-4fb6-ae2c-14ece783654b)
 
-## Dependencies
+## Installation
 
+### Option 1: Pre-built Executables (Recommended)
+Download the latest release for your platform from our [Releases page](https://github.com/widkit/greetings/releases):
+- Windows: `greetings-windows.exe`
+- macOS: `greetings-macos`
+- Linux: `greetings-linux`
+
+After downloading:
+1. Make the file executable (Linux/macOS):
+   ```bash
+   chmod +x greetings-linux  # or greetings-macos
+   ```
+2. Run the executable:
+   ```bash
+   # Windows
+   greetings-windows.exe
+   ```
+   # Linux/macOS
+   ```
+   ./greetings-linux  # or ./greetings-macos
+   ```
+
+### Option 2: From Source
+Requirements:
 * [ascii-image-converter](https://github.com/TheZoraiz/ascii-image-converter) (bundled with the project)
 * [requests](https://pypi.org/project/requests/)
 * [pytz](https://github.com/stub42/pytz)
-
-## Recommended
-* Terminal supporting 24-bit or 8-bit color (Highly Recommended)
-  
-## Installation
+* Python 3.10 or higher (for match/case support)
 
 Clone the repository:
 ```bash
@@ -32,6 +52,7 @@ Install `requests` and `pytz` via pip:
 ```bash
 pip install -r requirements.txt
 ```
+
 ## Using the script
 ```bash
 python3 main.py
@@ -45,14 +66,22 @@ notepad $PROFILE
 ```
 Add the following line at the top:
 ```
+# If using pre-built executable:
+& "PATH-TO-EXECUTABLE/greetings-windows.exe"
+
+# If using Python script:
 python "PATH-TO-FILE.py"
 ```
-Replace the path with the absolute path to main.py.
+Replace the path with the absolute path to the executable or script.
 
 ### Unix (Mac, Linux)
 Add line to your shell profile (~/.bashrc, ~/.zshrc, etc.):
-```
-python "PATH-TO-FILE.py"
+```bash
+# If using pre-built executable:
+/path/to/greetings-linux  # or greetings-macos
+
+# If using Python script:
+python "/path/to/main.py"
 ```
 
 ## Tips
