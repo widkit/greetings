@@ -1,8 +1,13 @@
 # greetings
 
-![Python Version](https://img.shields.io/badge/python-3.7%20%7C%203.8-blue)
+![Python Version](https://img.shields.io/badge/python-3.10+-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Release](https://img.shields.io/github/v/release/widkit/greetings)
+![Downloads](https://img.shields.io/github/downloads/widkit/greetings/total)
+![Issues](https://img.shields.io/github/issues/widkit/greetings)
+![Stars](https://img.shields.io/github/stars/widkit/greetings)
+![Platform](https://img.shields.io/badge/platform-linux%20%7C%20macos%20%7C%20windows-lightgrey)
+![ASCII Art](https://img.shields.io/badge/ascii-art-FF69B4)
 
 A Python program that works on Mac, Linux and Windows which fetches the daily Bing wallpaper and converts it into colorful ASCII art. It may be used with shells as a color script, as seen in DistroTube's Youtube channel.
 
@@ -26,10 +31,24 @@ After downloading:
    # Windows
    greetings-windows.exe
    ```
+   ```bash
    # Linux/macOS
-   ```
    ./greetings-linux  # or ./greetings-macos
    ```
+
+3. (Optional) For system-wide installation on Linux/macOS:
+   ```bash
+   # Move to /usr/local/bin for system-wide access
+   sudo mv greetings-linux /usr/local/bin/greetings  # or greetings-macos
+   
+   # Now you can run it from anywhere
+   greetings
+   ```
+
+   For Windows, you can:
+   1. Create a directory in Program Files: `C:\Program Files\greetings`
+   2. Move the executable there
+   3. Add the directory to your PATH environment variable
 
 ### Option 2: From Source
 Requirements:
@@ -218,4 +237,5 @@ Flags:
   -v, --version           Version for ascii-image-converter
 ```
 </details>
+
 
