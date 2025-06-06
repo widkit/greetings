@@ -3,9 +3,7 @@
 ![Python Version](https://img.shields.io/badge/python-3.10+-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Release](https://img.shields.io/github/v/release/widkit/greetings)
-![Downloads](https://img.shields.io/github/downloads/widkit/greetings/total)
 ![Issues](https://img.shields.io/github/issues/widkit/greetings)
-![Stars](https://img.shields.io/github/stars/widkit/greetings)
 ![Platform](https://img.shields.io/badge/platform-linux%20%7C%20macos%20%7C%20windows-lightgrey)
 ![ASCII Art](https://img.shields.io/badge/ascii-art-FF69B4)
 
