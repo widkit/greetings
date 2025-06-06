@@ -18,10 +18,7 @@ A Python program that works on Mac, Linux and Windows which fetches the daily Bi
   
 ## Installation
 
-Install ascii-image-converter:
-[ascii-image-converter](https://github.com/TheZoraiz/ascii-image-converter)
-
- Clone the repository:
+Clone the repository:
  ```bash
 git clone https://github.com/widkit/greetings
 ```
@@ -59,10 +56,10 @@ python "PATH-TO-FILE.py"
 
 ## Tips
 
-- You can save the daily images by uncommenting `save_images = True` at line 8.
+- You can save the daily images by uncommenting `save_images = True`.
 
-- You can change the value of `ascii-image-converter` in line 56 of `main.py`, which alters the output.
-  Here's the manual for `ascii-image-converter`:
+- You can change the parameters of `ascii-image-converter` in `main.py`, which alters the output.
+Manpage for `ascii-image-converter`:
   
 ```
   ascii-image-converter [image paths/urls or piped stdin] [flags]
