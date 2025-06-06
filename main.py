@@ -12,6 +12,9 @@ save_images = True
 system = platform.system()
 machine = platform.machine()
 
+# Get the directory where the script is located
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
 match system:
     case 'Windows':
         match machine:
@@ -26,9 +29,9 @@ match system:
     case 'Darwin': # macOS
         match machine:
             case 'x86_64': # Intel 
-                ascii_image_converter_bin = "./bin/macos/amd64/ascii-image-converter"
+                ascii_image_converter_bin = "./bin/macOS/amd64/ascii-image-converter"
             case 'arm64': # Apple Silicon
-                ascii_image_converter_bin = "./bin/macos/arm64/ascii-image-converter"
+                ascii_image_converter_bin = "./bin/macOS/arm64/ascii-image-converter"
             case _: 
                 print(f"Unknown macOS architecture '{machine}'.")
                 exit(1)
@@ -79,18 +82,22 @@ if f.read() != date_utc:
        # noinspection PyUnboundLocalVariable
        if os.path.isfile(image_file):
            os.remove(image_file)
-   res = requests.get('https://bing.biturl.top/')
-   link = res.json().get("url")
-   daily_image = requests.get(link).content
-   with open(image_file, 'wb') as handler:
-       handler.write(daily_image)
-   f = open(date_dir_file, "w")
-   f.write(date_utc)
-   f.close()
+   try:
+       res = requests.get('https://bing.biturl.top/', timeout=10)
+       res.raise_for_status()  # Raise an error for bad status codes
+       link = res.json().get("url")
+       if not link:
+           print("Error: No image URL found in response")
+           exit(1)
+       daily_image = requests.get(link, timeout=10).content
+       with open(image_file, 'wb') as handler:
+           handler.write(daily_image)
+       f = open(date_dir_file, "w")
+       f.write(date_utc)
+       f.close()
+   except requests.RequestException as e:
+       print(f"Error fetching image: {e}")
+       exit(1)
 
 # Convert the image to colorful ASCII using ascii-image-converter and print it.
-os.system(f"{ascii_image_converter_bin} -b --color --color-bg {image_file}")
-
-
-
-
+os.system(f"{os.path.join(script_dir, ascii_image_converter_bin)} -b --color --color-bg {image_file}")

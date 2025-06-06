@@ -1,4 +1,4 @@
-# greetings
+# Greetings - Daily Bing Wallpaper ASCII Art
 
 ![Python Version](https://img.shields.io/badge/python-3.7%20%7C%203.8-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
