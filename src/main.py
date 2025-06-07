@@ -90,7 +90,7 @@ if last_date != date_utc:
 # Convert the image to colorful ASCII using ascii-image-converter and print it.
 try:
     binary_name = "ascii-image-converter.exe" if useFile else "ascii-image-converter"
-    subprocess.run([binary_name, "-b", "--color", image_file], check=True)
+    subprocess.run([binary_name, "-b", "--color", "--color-bg", image_file], check=True)
 except subprocess.CalledProcessError as e:
     print(f"Error running ascii-image-converter: {e}")
     sys.exit(1)
