@@ -119,8 +119,7 @@ def main():
         try:
             print("Moving the binaries to /usr/local/bin (you may be prompted for your password)...")
             subprocess.run(["sudo", "mv", binary_path, "/usr/local/bin/ascii-image-converter"], check=True)
-            # Use the actual path of the running binary
-            subprocess.run(["sudo", "cp", os.path.abspath(sys.argv[0]), "/usr/local/bin/greetings"], check=True)
+            subprocess.run(["sudo", "cp", f"../greetings-{unixOS}", "/usr/local/bin/greetings"], check=True)
         except Exception as e:
             print(f"Failed to move binaries: {e}")
             sys.exit(1)
