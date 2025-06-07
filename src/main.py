@@ -1,5 +1,9 @@
 from datetime import datetime; import os, subprocess, requests, pytz, platform, yaml, sys
 
+# Check if running as PyInstaller binary
+def is_binary():
+    return getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS')
+
 # Get home directory and config paths
 home_dir = os.path.expanduser("~")
 config_dir = os.path.join(home_dir, ".config/greetings")
@@ -22,9 +26,15 @@ useFile = platform.system().upper() == 'WINDOWS'
 if not os.path.exists(config_dir):
     print("First run detected. Running setup.py...")
     try:
-        subprocess.run(["python3", os.path.join(os.path.dirname(__file__), "setup.py")], check=True)
-    except subprocess.CalledProcessError as e:
-        print(f"Failed to run setup.py: {e}")
+        if is_binary():
+            # When running as binary, run setup directly
+            import setup
+            setup.main()
+        else:
+            # When running as source, run setup.py as a script
+            subprocess.run(["python3", os.path.join(os.path.dirname(__file__), "setup.py")], check=True)
+    except Exception as e:
+        print(f"Failed to run setup: {e}")
         sys.exit(1)
 
 # Assign today's date to a variable (in UTC, as Bing refreshes their wallpapers by UTC)

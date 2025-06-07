@@ -39,7 +39,7 @@ jobs:
         pip install pyinstaller requests pytz PyYAML
         
     - name: Build with PyInstaller
-      run: pyinstaller --onefile --name ${{ matrix.output_name }} src/main.py
+      run: pyinstaller --onefile --add-data "src/setup.py:." --name ${{ matrix.output_name }} src/main.py
       shell: bash
         
     - name: Upload Release Asset
