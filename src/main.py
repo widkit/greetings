@@ -10,6 +10,21 @@ config_dir = os.path.join(home_dir, ".config/greetings")
 date_dir_file = os.path.join(config_dir, "date.txt")
 config_file = os.path.join(config_dir, "greetings.yaml")
 
+# Create config directory and files if they don't exist
+if not os.path.exists(config_dir):
+    print("Creating configuration directory...")
+    os.makedirs(config_dir)
+    os.makedirs(os.path.join(config_dir, "images"))
+    open(date_dir_file, 'w').close()
+
+# Create default config file if it doesn't exist
+if not os.path.exists(config_file):
+    default_config = {
+        'save_images': False,
+    }
+    with open(config_file, 'w') as f:
+        yaml.safe_dump(default_config, f, default_flow_style=False)
+
 # Read configuration
 try:
     with open(config_file, 'r') as f:
@@ -22,9 +37,11 @@ except (FileNotFoundError, yaml.YAMLError):
 # Determine whether to use file-based execution for Windows
 useFile = platform.system().upper() == 'WINDOWS'
 
-# Detect first run, create necessary directories, files and install ascii-image-converter if not present
-if not os.path.exists(config_dir):
-    print("First run detected. Running setup.py...")
+# Check if ascii-image-converter needs to be installed
+try:
+    subprocess.run(["ascii-image-converter", "--version"], check=True, capture_output=True)
+except (subprocess.CalledProcessError, FileNotFoundError):
+    print("Installing ascii-image-converter...")
     try:
         if is_binary():
             # When running as binary, run setup directly
