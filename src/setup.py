@@ -99,12 +99,13 @@ else:
 
 # Set the binary as executable
 if system != 'WINDOWS':
-    subprocess.run(["chmod", "+x", "ascii-image-converter/ascii-image-converter"], check=True)
+    binary_path = f"ascii-image-converter/{releaseName.replace('.tar.gz', '')}/ascii-image-converter"
+    subprocess.run(["chmod", "+x", binary_path], check=True)
 
 # Move the binary to /usr/local/bin (Linux/macOS)
 try:
     print("Moving the binary to /usr/local/bin (you may be prompted for your password)...")
-    subprocess.run(["sudo", "mv", "ascii-image-converter/ascii-image-converter", "/usr/local/bin/ascii-image-converter"], check=True)
+    subprocess.run(["sudo", "mv", binary_path, "/usr/local/bin/ascii-image-converter"], check=True)
 except subprocess.CalledProcessError:
     print("Failed to move binary. Please manually run: \"sudo mv ascii-image-converter/ascii-image-converter /usr/local/bin/\"")
     sys.exit(1)
