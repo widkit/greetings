@@ -14,17 +14,22 @@ A Python program that works on Mac, Linux and Windows which fetches the daily Bi
 ## Installation
 
 ### Option 1: Pre-built Executables (Recommended)
-Download the latest release for your platform from our [Releases page](https://github.com/widkit/greetings/releases):
+Download the latest release for your platform from [Releases page](https://github.com/widkit/greetings/releases):
 - Windows: `greetings-windows.exe`
 - macOS: `greetings-macos`
 - Linux: `greetings-linux`
 
 After downloading:
-1. Make the file executable (Linux/macOS):
+
+1. Install dependencies via pip:
+   ```bash
+   pip install -r requirements.txt
+   ```
+2. Make the file executable (Linux/macOS):
    ```bash
    chmod +x greetings-linux  # or greetings-macos
    ```
-2. Run the executable:
+3. Run the executable:
    ```bash
    # Windows
    greetings-windows.exe
@@ -34,7 +39,7 @@ After downloading:
    ./greetings-linux  # or ./greetings-macos
    ```
 
-3. (Optional) For system-wide installation on Linux/macOS:
+4. (Optional) For system-wide installation on Linux/macOS:
    ```bash
    # Move to /usr/local/bin for system-wide access
    sudo mv greetings-linux /usr/local/bin/greetings  # or greetings-macos
