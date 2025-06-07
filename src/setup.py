@@ -111,15 +111,15 @@ def main():
     # Check if the operating system is not Windows
     if system != 'WINDOWS':
         if system == 'LINUX': # Assign the platform to match the binary name
-            platform = 'linux'
+            unixOS = 'linux'
         elif system == 'DARWIN':
-            platform = 'macos'
+            unixOS = 'macos'
         binary_path = os.path.join(extract_dir, releaseName.replace('.tar.gz', ''), 'ascii-image-converter')
         subprocess.run(["chmod", "+x", binary_path], check=True)
         try:
             print("Moving the binaries to /usr/local/bin (you may be prompted for your password)...")
             subprocess.run(["sudo", "mv", binary_path, "/usr/local/bin/ascii-image-converter"], check=True)
-            subprocess.run(["sudo", "cp", f"./greetings-{platform}", "/usr/local/bin/greetings"], check=True)
+            subprocess.run(["sudo", "cp", f"./greetings-{unixOS}", "/usr/local/bin/greetings"], check=True)
         except Exception as e:
             print(f"Failed to move binaries: {e}")
             sys.exit(1)
