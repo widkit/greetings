@@ -35,19 +35,7 @@ After downloading:
    ./greetings-linux  # or ./greetings-macos
    ```
 
-3. (Optional) For system-wide installation on Linux/macOS:
-   ```bash
-   # Move to /usr/local/bin for system-wide access
-   sudo mv greetings-linux /usr/local/bin/greetings  # or greetings-macos
-   
-   # Now you can run it from anywhere
-   greetings
-   ```
-
-   For Windows, you can:
-   1. Create a directory in Program Files: `C:\Program Files\greetings`
-   2. Move the executable there
-   3. Add the directory to your PATH environment variable
+   For Windows, the script uses the downloaded binary file, without installing.
 
 ### Option 2: From Source
 Requirements:
@@ -97,7 +85,7 @@ Replace the path with the absolute path to the executable or script.
 Add line to your shell profile (~/.bashrc, ~/.zshrc, etc.):
 ```bash
 # If using pre-built executable:
-/path/to/greetings-linux  # or greetings-macos
+greetings
 
 # If using Python script:
 python "/path/to/src/main.py"
