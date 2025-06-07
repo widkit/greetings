@@ -50,10 +50,11 @@ After downloading:
 
 ### Option 2: From Source
 Requirements:
-* [ascii-image-converter](https://github.com/TheZoraiz/ascii-image-converter) (bundled with the project)
+* Python 3.10 or higher (for match/case support)
 * [requests](https://pypi.org/project/requests/)
 * [pytz](https://github.com/stub42/pytz)
-* Python 3.10 or higher (for match/case support)
+
+The program will automatically download and install the required [ascii-image-converter](https://github.com/TheZoraiz/ascii-image-converter) binary for your system on first run.
 
 Clone the repository:
 ```bash
@@ -64,7 +65,7 @@ cd into `greetings`:
 ```bash
 cd greetings
 ```
-Install `requests` and `pytz` via pip:
+Install dependencies via pip:
 
 ```bash
 pip install -r requirements.txt
@@ -72,7 +73,7 @@ pip install -r requirements.txt
 
 ## Using the script
 ```bash
-python3 main.py
+python3 src/main.py
 ```
 
 ## Using as a color script (runs at shell start-up)
@@ -87,7 +88,7 @@ Add the following line at the top:
 & "PATH-TO-EXECUTABLE/greetings-windows.exe"
 
 # If using Python script:
-python "PATH-TO-FILE.py"
+python "PATH-TO-SCRIPT/src/main.py"
 ```
 Replace the path with the absolute path to the executable or script.
 
@@ -98,18 +99,17 @@ Add line to your shell profile (~/.bashrc, ~/.zshrc, etc.):
 /path/to/greetings-linux  # or greetings-macos
 
 # If using Python script:
-python "/path/to/main.py"
+python "/path/to/src/main.py"
 ```
 
 ## Tips
 
-- You can save the daily images by uncommenting `save_images = True` in main.py.
+- You can save the daily images by setting `save_images = True` in src/main.py.
 - Images are cached in ~/.config/greetings/ to avoid unnecessary downloads.
-- The script automatically detects your OS and architecture to use the correct binary.
 
 ## Customization
 
-You can change the parameters of `ascii-image-converter` in `main.py` to alter the output. Here are some useful flags:
+You can change the parameters of `ascii-image-converter` in src/main.py to alter the output. Here are some useful flags:
 
 ```
 ascii-image-converter [image paths/urls or piped stdin] [flags]
