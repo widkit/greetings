@@ -62,11 +62,6 @@ def main():
             print(f"Unsupported operating system '{system}'.")
             sys.exit(1)
 
-    # Create a temporary directory for downloads
-    temp_dir = os.path.join(os.path.expanduser("~"), ".config", "greetings", "temp")
-    os.makedirs(temp_dir, exist_ok=True)
-    os.chdir(temp_dir)
-
     # Construct the download URL
     downloadURL = f"https://github.com/TheZoraiz/ascii-image-converter/releases/download/{ascii_image_converter_latestRelease}/{releaseName}"
 
