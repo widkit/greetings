@@ -104,7 +104,7 @@ python "/path/to/src/main.py"
 
 ## Tips
 
-- You can save the daily images by setting `save_images = True` in src/main.py.
+- You can save the daily images by setting `save_images = True` in ~/.config/greetings/greetings.yaml
 - Images are cached in ~/.config/greetings/ to avoid unnecessary downloads.
 
 ## Customization
