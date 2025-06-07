@@ -39,14 +39,7 @@ jobs:
         pip install pyinstaller requests pytz
         
     - name: Build with PyInstaller
-      run: |
-        if [ "${{ matrix.os }}" = "windows-latest" ]; then
-          pyinstaller --onefile --add-data "bin/windows;bin/windows" --name ${{ matrix.output_name }} main.py
-        elif [ "${{ matrix.os }}" = "macos-latest" ]; then
-          pyinstaller --onefile --add-data "bin/macOS:bin/macOS" --name ${{ matrix.output_name }} main.py
-        else
-          pyinstaller --onefile --add-data "bin/linux:bin/linux" --name ${{ matrix.output_name }} main.py
-        fi
+      run: pyinstaller --onefile --name ${{ matrix.output_name }} main.py
       shell: bash
         
     - name: Upload Release Asset
