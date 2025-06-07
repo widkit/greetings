@@ -23,7 +23,7 @@ After downloading:
 
 1. Install dependencies via pip:
    ```bash
-   pip install -r requests pytz PyYAML
+   pip install requests pytz PyYAML
    ```
 2. Make the file executable (Linux/macOS):
    ```bash
