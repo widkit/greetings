@@ -12,16 +12,12 @@ config_file = os.path.join(config_dir, "greetings.yaml")
 
 # Create config directory and files if they don't exist
 if not os.path.exists(config_dir):
-    print("Creating configuration directory...")
-    os.makedirs(config_dir)
+    os.makedirs(config_dir, exist_ok=True)
     os.makedirs(os.path.join(config_dir, "images"))
     open(date_dir_file, 'w').close()
-
-# Create default config file if it doesn't exist
-if not os.path.exists(config_file):
     default_config = {
-        'save_images': False,
-    }
+            'save_images': False,
+        }
     with open(config_file, 'w') as f:
         yaml.safe_dump(default_config, f, default_flow_style=False)
 

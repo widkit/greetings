@@ -8,6 +8,23 @@ def main():
     # Get the directory where the script is located
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
+    # Get home directory and config paths
+    home_dir = os.path.expanduser("~")
+    config_dir = os.path.join(home_dir, ".config/greetings")
+
+    if not os.path.exists(config_dir):
+        print(f"Creating files at: {config_dir}")
+        os.makedirs(config_dir, exist_ok=True)
+        os.makedirs(os.path.join(config_dir, "images"))
+        config_file = os.path.join(config_dir, "greetings.yaml")
+        date_dir_file = os.path.join(config_dir, "date.txt")
+        open(date_dir_file, 'w').close()
+        default_config = {
+                'save_images': False,
+            }
+        with open(config_file, 'w') as f:
+            yaml.safe_dump(default_config, f, default_flow_style=False)
+
     # Fetch the latest release of ascii-image-converter from GitHub using requests
     try:
         response = requests.get('https://api.github.com/repos/TheZoraiz/ascii-image-converter/releases/latest', timeout=10)
@@ -65,14 +82,12 @@ def main():
     # Construct the download URL
     downloadURL = f"https://github.com/TheZoraiz/ascii-image-converter/releases/download/{ascii_image_converter_latestRelease}/{releaseName}"
 
-    # Define the output file path
-    outputFile = os.path.join(temp_dir, releaseName)
-
-    # Download the file with curl
+    # Download the file
     try:
         print(f"Downloading {releaseName} from release {ascii_image_converter_latestRelease}...")
         response = requests.get(downloadURL, timeout=30)
         response.raise_for_status()
+        outputFile = os.path.join(config_dir, releaseName)
         with open(outputFile, 'wb') as f:
             f.write(response.content)
         print(f"{outputFile} downloaded successfully.")
@@ -81,7 +96,7 @@ def main():
         sys.exit(1)
 
     # Extract the downloaded file
-    extract_dir = os.path.join(temp_dir, "ascii-image-converter")
+    extract_dir = os.path.join(config_dir, "ascii-image-converter")
     if releaseName.endswith(".zip"):
         try:
             with zipfile.ZipFile(outputFile, 'r') as zip_ref:
@@ -114,7 +129,7 @@ def main():
         try:
             print("Moving the binaries to /usr/local/bin (you may be prompted for your password)...")
             subprocess.run(["sudo", "mv", binary_path, "/usr/local/bin/ascii-image-converter"], check=True)
-            subprocess.run(["sudo", "cp", f"../greetings-{unixOS}", "/usr/local/bin/greetings"], check=True)
+            subprocess.run(["sudo", "cp", f"greetings-{unixOS}", "/usr/local/bin/greetings"], check=True)
         except Exception as e:
             print(f"Failed to move binaries: {e}")
             sys.exit(1)
@@ -122,29 +137,10 @@ def main():
     # Cleanup
     print("Cleaning up...")
     try:
-        shutil.rmtree(temp_dir)
+        shutil.rmtree(extract_dir)
+        os.remove(outputFile)
     except Exception as e:
         print(f"Error deleting the files: {e}")
-
-    # Get the home directory
-    home_dir = os.path.expanduser("~")
-
-    # Check if the directory exists, if not create it and output the directory of the files to the user.
-    config_dir = os.path.join(home_dir, ".config/greetings")
-    date_dir_file = os.path.join(config_dir, "date.txt")
-    config_file = os.path.join(config_dir, "greetings.yaml")
-
-    if not os.path.exists(config_dir):
-        print(f"Creating files at: {config_dir}")
-        os.makedirs(config_dir)
-        os.makedirs(os.path.join(config_dir, "images"))
-        open(date_dir_file, 'w').close()
-        # Create default config file in YAML format
-        default_config = {
-            'save_images': False,
-        }
-        with open(config_file, 'w') as f:
-            yaml.safe_dump(default_config, f, default_flow_style=False)
 
     print("Setup complete.")
 
