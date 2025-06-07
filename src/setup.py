@@ -1,4 +1,4 @@
-import os, subprocess, platform, shutil, tarfile, zipfile, yaml
+import os, subprocess, platform, shutil, tarfile, zipfile, yaml, sys
 
 # Detect the operating system and architecture to select the correct binary for ascii-image-converter
 system = platform.system().upper()
@@ -13,7 +13,7 @@ try:
     ascii_image_converter_latestRelease = subprocess.check_output(curlCommand, shell=True).decode('utf-8').strip()
 except subprocess.CalledProcessError as e:
     print(f"Error fetching the latest release: {e}")
-    exit(1)
+    sys.exit(1)
 
 # Default
 useFile = False
@@ -33,7 +33,7 @@ match system:
                 releaseName = "ascii-image-converter_Windows_i386_32bit.zip"
             case _:
                 print(f"Unknown Windows architecture '{machine}'.")
-                exit(1)
+                sys.exit(1)
     case 'DARWIN':
         match machine:
             case 'X86_64':
@@ -42,7 +42,7 @@ match system:
                 releaseName = "ascii-image-converter_macOS_arm64_64bit.tar.gz"
             case _:
                 print(f"Unknown macOS architecture '{machine}'.")
-                exit(1)
+                sys.exit(1)
     case 'LINUX':
         match machine:
             case 'X86_64':
@@ -55,10 +55,10 @@ match system:
                 releaseName = "ascii-image-converter_Linux_i386_32bit.tar.gz"
             case _:
                 print(f"Unknown Linux architecture '{machine}'.")
-                exit(1)
+                sys.exit(1)
     case _:
         print(f"Unsupported operating system '{system}'.")
-        exit(1)
+        sys.exit(1)
 
 # Construct the download URL
 downloadURL = f"https://github.com/TheZoraiz/ascii-image-converter/releases/download/{ascii_image_converter_latestRelease}/{releaseName}"
@@ -73,7 +73,7 @@ try:
     print(f"{outputFile} downloaded successfully.")
 except subprocess.CalledProcessError as e:
     print(f"Error downloading file: {e}")
-    exit(1)
+    sys.exit(1)
 
 # Extract the downloaded file
 if releaseName.endswith(".zip"):
@@ -83,7 +83,7 @@ if releaseName.endswith(".zip"):
         print("File extracted successfully.")
     except Exception as e:
         print(f"Error extracting file: {e}")
-        exit(1)
+        sys.exit(1)
 
 elif releaseName.endswith(".tar.gz"):
     try:
@@ -92,10 +92,10 @@ elif releaseName.endswith(".tar.gz"):
         print("File extracted successfully.")
     except Exception as e:
         print(f"Error extracting file: {e}")
-        exit(1)
+        sys.exit(1)
 else:
     print("Error extracting file: Unsupported file format.")
-    exit(1)
+    sys.exit(1)
 
 # Set the binary as executable
 if system != 'WINDOWS':
@@ -107,7 +107,7 @@ try:
     subprocess.run(["sudo", "mv", "ascii-image-converter/ascii-image-converter", "/usr/local/bin/ascii-image-converter"], check=True)
 except subprocess.CalledProcessError:
     print("Failed to move binary. Please manually run: \"sudo mv ascii-image-converter/ascii-image-converter /usr/local/bin/\"")
-    exit(1)
+    sys.exit(1)
 
 # Cleanup
 print("Cleaning up...")

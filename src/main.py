@@ -1,4 +1,4 @@
-from datetime import datetime; import os, subprocess, requests, pytz, platform, yaml
+from datetime import datetime; import os, subprocess, requests, pytz, platform, yaml, sys
 
 # Get home directory and config paths
 home_dir = os.path.expanduser("~")
@@ -12,8 +12,8 @@ try:
         config = yaml.safe_load(f)
         save_images = config.get('save_images', False)
 except (FileNotFoundError, yaml.YAMLError):
-    save_images = False
     print("No config file found. Using default settings.")
+    save_images = False
 
 # Determine whether to use file-based execution for Windows
 useFile = platform.system().upper() == 'WINDOWS'
@@ -25,7 +25,7 @@ if not os.path.exists(config_dir):
         subprocess.run(["python3", os.path.join(os.path.dirname(__file__), "setup.py")], check=True)
     except subprocess.CalledProcessError as e:
         print(f"Failed to run setup.py: {e}")
-        exit(1)
+        sys.exit(1)
 
 # Assign today's date to a variable (in UTC, as Bing refreshes their wallpapers by UTC)
 utc_now = datetime.now(pytz.utc)
@@ -54,7 +54,7 @@ if last_date != date_utc:
         link = res.json().get("url")
         if not link:
             print("Error: No image URL found in response")
-            exit(1)
+            sys.exit(1)
         daily_image = requests.get(link, timeout=10).content
         with open(image_file, 'wb') as handler:
             handler.write(daily_image)
@@ -62,7 +62,7 @@ if last_date != date_utc:
             f.write(date_utc)
     except requests.RequestException as e:
         print(f"Error fetching image: {e}")
-        exit(1)
+        sys.exit(1)
 
 # Convert the image to colorful ASCII using ascii-image-converter and print it.
 try:
@@ -70,4 +70,4 @@ try:
     subprocess.run([binary_name, "-b", "--color", "--color-bg", image_file], check=True)
 except subprocess.CalledProcessError as e:
     print(f"Error running ascii-image-converter: {e}")
-    exit(1)
+    sys.exit(1)
