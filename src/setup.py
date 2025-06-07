@@ -1,4 +1,4 @@
-import os, subprocess, platform, shutil, tarfile, zipfile
+import os, subprocess, platform, shutil, tarfile, zipfile, yaml
 
 # Detect the operating system and architecture to select the correct binary for ascii-image-converter
 system = platform.system().upper()
@@ -123,11 +123,18 @@ home_dir = os.path.expanduser("~")
 # Check if the directory exists, if not create it and output the directory of the files to the user.
 config_dir = os.path.join(home_dir, ".config/greetings")
 date_dir_file = os.path.join(config_dir, "date.txt")
+config_file = os.path.join(config_dir, "greetings.yaml")
 
 if not os.path.exists(config_dir):
     print(f"Creating files at: {config_dir}")
     os.makedirs(config_dir)
     os.makedirs(os.path.join(config_dir, "images"))
     open(date_dir_file, 'w').close()
+    # Create default config file in YAML format
+    default_config = {
+        'save_images': False,
+    }
+    with open(config_file, 'w') as f:
+        yaml.safe_dump(default_config, f, default_flow_style=False)
 
 print("Setup complete.")

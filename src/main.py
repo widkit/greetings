@@ -1,14 +1,22 @@
-from datetime import datetime; import os, subprocess, requests, pytz, platform
-
-save_images = False  # Set to True if you want to save images
-
-# Determine whether to use file-based execution for Windows
-useFile = platform.system().upper() == 'WINDOWS'
+from datetime import datetime; import os, subprocess, requests, pytz, platform, yaml
 
 # Get home directory and config paths
 home_dir = os.path.expanduser("~")
 config_dir = os.path.join(home_dir, ".config/greetings")
 date_dir_file = os.path.join(config_dir, "date.txt")
+config_file = os.path.join(config_dir, "greetings.yaml")
+
+# Read configuration
+try:
+    with open(config_file, 'r') as f:
+        config = yaml.safe_load(f)
+        save_images = config.get('save_images', False)
+except (FileNotFoundError, yaml.YAMLError):
+    save_images = False
+    print("No config file found. Using default settings.")
+
+# Determine whether to use file-based execution for Windows
+useFile = platform.system().upper() == 'WINDOWS'
 
 # Detect first run, create necessary directories, files and install ascii-image-converter if not present
 if not os.path.exists(config_dir):
