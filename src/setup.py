@@ -1,4 +1,4 @@
-import os, subprocess, platform, shutil, tarfile, zipfile, yaml, sys
+import os, subprocess, platform, shutil, tarfile, zipfile, yaml, sys, requests
 
 def main():
     # Detect the operating system and architecture to select the correct binary for ascii-image-converter
@@ -8,11 +8,12 @@ def main():
     # Get the directory where the script is located
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
-    # Fetch the latest release of ascii-image-converter from GitHub
-    curlCommand = "curl -s https://api.github.com/repos/TheZoraiz/ascii-image-converter/releases/latest | grep -oP '\"tag_name\": \"\\K[^\"]+'"
+    # Fetch the latest release of ascii-image-converter from GitHub using requests
     try:
-        ascii_image_converter_latestRelease = subprocess.check_output(curlCommand, shell=True).decode('utf-8').strip()
-    except subprocess.CalledProcessError as e:
+        response = requests.get('https://api.github.com/repos/TheZoraiz/ascii-image-converter/releases/latest', timeout=10)
+        response.raise_for_status()
+        ascii_image_converter_latestRelease = response.json()['tag_name']
+    except (requests.RequestException, KeyError) as e:
         print(f"Error fetching the latest release: {e}")
         sys.exit(1)
 
@@ -75,9 +76,12 @@ def main():
     # Download the file with curl
     try:
         print(f"Downloading {releaseName} from release {ascii_image_converter_latestRelease}...")
-        subprocess.check_call(["curl", "-L", "-o", outputFile, downloadURL])
+        response = requests.get(downloadURL, timeout=30)
+        response.raise_for_status()
+        with open(outputFile, 'wb') as f:
+            f.write(response.content)
         print(f"{outputFile} downloaded successfully.")
-    except subprocess.CalledProcessError as e:
+    except requests.RequestException as e:
         print(f"Error downloading file: {e}")
         sys.exit(1)
 
