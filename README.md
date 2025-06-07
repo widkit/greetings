@@ -21,15 +21,11 @@ Download the latest release for your platform from [Releases page](https://githu
 
 After downloading:
 
-1. Install dependencies via pip:
-   ```bash
-   pip install requests pytz PyYAML
-   ```
-2. Make the file executable (Linux/macOS):
+1. Make the file executable (Linux/macOS):
    ```bash
    chmod +x greetings-linux  # or greetings-macos
    ```
-3. Run the executable:
+2. Run the executable:
    ```bash
    # Windows
    greetings-windows.exe
@@ -39,7 +35,7 @@ After downloading:
    ./greetings-linux  # or ./greetings-macos
    ```
 
-4. (Optional) For system-wide installation on Linux/macOS:
+3. (Optional) For system-wide installation on Linux/macOS:
    ```bash
    # Move to /usr/local/bin for system-wide access
    sudo mv greetings-linux /usr/local/bin/greetings  # or greetings-macos
