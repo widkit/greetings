@@ -68,7 +68,7 @@ try:
 except FileNotFoundError:
     last_date = ""
 
-if last_date != date_utc:
+if last_date != date_utc or not os.path.exists(image_file):
     if not save_images and os.path.isfile(image_file):
         os.remove(image_file)
     try:
