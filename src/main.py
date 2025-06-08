@@ -10,25 +10,33 @@ config_dir = os.path.join(home_dir, ".config/greetings")
 date_dir_file = os.path.join(config_dir, "date.txt")
 config_file = os.path.join(config_dir, "greetings.yaml")
 
+def createConfig():
+    default_config = {
+            'save_images': False,
+            'flags': ["--color", "--color-bg", "-b"]
+        }
+    with open(config_file, 'w') as f:
+        yaml.safe_dump(default_config, f, default_flow_style=False)
+
 # Create config directory and files if they don't exist
 if not os.path.exists(config_dir):
     os.makedirs(config_dir, exist_ok=True)
     os.makedirs(os.path.join(config_dir, "images"))
     open(date_dir_file, 'w').close()
-    default_config = {
-            'save_images': False,
-        }
-    with open(config_file, 'w') as f:
-        yaml.safe_dump(default_config, f, default_flow_style=False)
+    createConfig()
 
 # Read configuration
 try:
     with open(config_file, 'r') as f:
         config = yaml.safe_load(f)
         save_images = config.get('save_images', False)
+        flags = config.get('flags', ["--color", "--color-bg", "-b"])        
 except (FileNotFoundError, yaml.YAMLError):
     print("No config file found. Using default settings.")
     save_images = False
+    flags = ["--color", "--color-bg", "-b"]
+    createConfig()
+
 
 # Determine whether to use file-based execution for Windows
 useFile = platform.system().upper() == 'WINDOWS'
@@ -90,7 +98,7 @@ if last_date != date_utc or not os.path.exists(image_file):
 # Convert the image to colorful ASCII using ascii-image-converter and print it.
 try:
     binary_name = "ascii-image-converter.exe" if useFile else "ascii-image-converter"
-    subprocess.run([binary_name, "-b", "--color", "--color-bg", image_file], check=True)
+    subprocess.run([binary_name, *flags, image_file], check=True)
 except subprocess.CalledProcessError as e:
     print(f"Error running ascii-image-converter: {e}")
     sys.exit(1)
