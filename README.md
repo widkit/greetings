@@ -99,21 +99,50 @@ python "/path/to/src/main.py"
 
 ## Customization
 
-You can change the parameters of `ascii-image-converter` in src/main.py to alter the output. Here are some useful flags:
+The program can be customized through the configuration file located at `~/.config/greetings/greetings.yaml`. Here's an example configuration:
 
+```yaml
+save_images: false
+flags:
+  - -C
+  - --color-bg
+  - -b
+  # To enable additional flags, uncomment and move them above this line
+  # - -n
+  # - -x
+  # - -d
+  # - 60,30
 ```
-ascii-image-converter [image paths/urls or piped stdin] [flags]
 
-Common flags:
-  -C, --color             Display ascii art with original colors
-  -b, --braille          Use braille characters instead of ascii
-  -d, --dimensions       Set width and height (e.g. -d 60,30)
-  -f, --full            Use largest dimensions that fill terminal width
-  -g, --grayscale       Display grayscale ascii art
-  -c, --complex         Display ascii characters in larger range
+### Available Flags
+
+#### Basic Flags
+- `-C`: Display ASCII art with original colors
+- `--color-bg`: Use color on character background instead of foreground
+- `-b`: Use braille characters instead of ASCII
+- `-g`: Display grayscale ASCII art
+- `-c`: Use more ASCII characters for higher quality
+- `-f`: Use largest dimensions that fill the terminal width
+- `-n`: Display ASCII art in negative colors
+- `-x`: Flip ASCII art horizontally
+- `-y`: Flip ASCII art vertically
+
+#### Flags with Parameters
+These flags require two separate lines in the configuration:
 ```
+- -d
+- 60,30
+```
+- `-d`: Set width and height for ASCII art (e.g., 60,30)
+- `-W`: Set width for ASCII art (height adjusts automatically)
+- `-H`: Set height for ASCII art (width adjusts automatically)
+- `-m`: Custom ASCII characters (ordered from darkest to lightest)
 
-For all available options, see the [full manpage below](#full-manpage).
+### Notes
+- The configuration file is created automatically on first run
+- Changes to the configuration take effect immediately
+- Some flags may not work well together (e.g., `-C` overrides `-g`)
+- Terminal must support the selected output options (e.g., colors, braille)
 
 ## Full Manpage
 
