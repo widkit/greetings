@@ -40,7 +40,7 @@ def main():
     # Detect the architecture and the OS, set the release name 
     match system:
         case 'WINDOWS':
-            if not ctypes.windll.shell32.IsUserAnAdmin() or os.getuid() == 0:
+            if not ctypes.windll.shell32.IsUserAnAdmin():
                 print("Please run the program as administrator for the setup.")
                 sys.exit(1)
             useFile = True
@@ -121,7 +121,6 @@ def main():
         print("Error extracting file: Unsupported file format.")
         sys.exit(1)
 
-
     # Check if the operating system is not Windows
     if system != 'WINDOWS':
         if system == 'LINUX': # Assign the platform to match the binary name
@@ -138,11 +137,12 @@ def main():
             print(f"Failed to move binaries: {e}")
             sys.exit(1)
     else:
-        os.makedirs("C:\\Program Files\\TheZoraiz\\ascii-image-converter")
-        os.makedirs("C:\\Program Files\\widkit\\greetings")
-        binary_path = os.path.join(extract_dir, releaseName.replace('.zip', '.exe'), 'ascii-image-converter')
-        subprocess.run([ "mv", binary_path, "C:\\Program Files\\TheZoraiz\\ascii-image-converter"], check=True)
-        subprocess.run([ "cp", "greetings-windows", "C:\\Program Files\\widkit\\greetings\\greetings.exe"], check=True)
+        os.makedirs("C:\\Program Files\\TheZoraiz\\ascii-image-converter", exist_ok=True)
+        os.makedirs("C:\\Program Files\\widkit\\greetings", exist_ok=True)
+        binary_path = os.path.join(extract_dir, releaseName.replace('.zip', ''), 'ascii-image-converter.exe')
+        shutil.move(binary_path, "C:\\Program Files\\TheZoraiz\\ascii-image-converter\\ascii-image-converter.exe")
+        shutil.copy("greetings-windows.exe", "C:\\Program Files\\widkit\\greetings\\greetings.exe")
+
 
     # Cleanup
     print("Cleaning up...")

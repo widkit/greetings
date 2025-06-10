@@ -37,6 +37,13 @@ except (FileNotFoundError, yaml.YAMLError):
     flags = ["--color", "--color-bg", "-b"]
     createConfig()
 
+# Check if running on Windows
+isWindows = platform.system().upper() == 'WINDOWS'
+
+if isWindows:
+    binary_dir = r"C:\Program Files\TheZoraiz\ascii-image-converter"
+    os.environ["PATH"] += os.pathsep + binary_dir
+
 # Check if ascii-image-converter needs to be installed
 try:
     subprocess.run(["ascii-image-converter", "--version"], check=True, capture_output=True)
@@ -93,7 +100,7 @@ if last_date != date_utc or not os.path.exists(image_file):
 
 # Convert the image to colorful ASCII using ascii-image-converter and print it.
 try:
-    binary_name = r"C:\Program Files\TheZoraiz\ascii-image-converter\ascii-image-converter.exe" if platform.system().upper() == 'WINDOWS' else "ascii-image-converter"
+    binary_name = r"C:\Program Files\TheZoraiz\ascii-image-converter\ascii-image-converter.exe" if isWindows else "ascii-image-converter"
     subprocess.run([binary_name, *flags, image_file], check=True)
 except subprocess.CalledProcessError as e:
     print(f"Error running ascii-image-converter: {e}")
