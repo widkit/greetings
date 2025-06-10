@@ -35,7 +35,7 @@ isWindows = platform.system().upper() == 'WINDOWS'
 
 # Since PATH is not modified during setup, we use add it to environ.
 if isWindows:
-    binary_dir = r"C:\Program Files\TheZoraiz\ascii-image-converter"
+    binary_dir = r"C:\Program Files\widkit\ascii-image-converter"
     os.environ["PATH"] += os.pathsep + binary_dir
 
 # Check if ascii-image-converter needs to be installed.
@@ -94,7 +94,7 @@ if last_date != date_utc or not os.path.exists(image_file): # Fetch image if the
 
 # Convert the image to colorful ASCII using ascii-image-converter and print it.
 try:
-    binary_name = r"C:\Program Files\TheZoraiz\ascii-image-converter\ascii-image-converter.exe" if isWindows else "ascii-image-converter" # Use the binary name depending on the OS
+    binary_name = r"C:\Program Files\widkit\ascii-image-converter\ascii-image-converter.exe" if isWindows else "ascii-image-converter" # Use the binary name depending on the OS
     subprocess.run([binary_name, *flags, image_file], check=True)
 except subprocess.CalledProcessError as e:
     print(f"Error running ascii-image-converter: {e}")

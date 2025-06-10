@@ -74,7 +74,7 @@ def main():
 
     # Fetch the latest release of ascii-image-converter from GitHub using requests.
     try:
-        response = requests.get('https://api.github.com/repos/TheZoraiz/ascii-image-converter/releases/latest', timeout=10) # Get latest release tag.
+        response = requests.get('https://api.github.com/repos/widkit/ascii-image-converter/releases/latest', timeout=10) # Get latest release tag.
         response.raise_for_status()
         ascii_image_converter_latestRelease = response.json()['tag_name']
     except (requests.RequestException, KeyError) as e:
@@ -127,7 +127,7 @@ def main():
             sys.exit(1)
 
     # Construct the download URL.
-    downloadURL = f"https://github.com/TheZoraiz/ascii-image-converter/releases/download/{ascii_image_converter_latestRelease}/{releaseName}"
+    downloadURL = f"https://github.com/widkit/ascii-image-converter/releases/download/{ascii_image_converter_latestRelease}/{releaseName}"
 
     # Download the file.
     try:
@@ -181,10 +181,10 @@ def main():
             print(f"Failed to move binaries: {e}")
             sys.exit(1)
     else: # Windows
-        os.makedirs("C:\\Program Files\\TheZoraiz\\ascii-image-converter", exist_ok=True) # Make directories for ascii-image-converter and greetings.
+        os.makedirs("C:\\Program Files\\widkit\\ascii-image-converter", exist_ok=True) # Make directories for ascii-image-converter and greetings.
         os.makedirs("C:\\Program Files\\widkit\\greetings", exist_ok=True)
         binary_path = os.path.join(extract_dir, releaseName.replace('.zip', ''), 'ascii-image-converter.exe')
-        shutil.move(binary_path, "C:\\Program Files\\TheZoraiz\\ascii-image-converter\\ascii-image-converter.exe") # Moves the file.
+        shutil.move(binary_path, "C:\\Program Files\\widkit\\ascii-image-converter\\ascii-image-converter.exe") # Moves the file.
         shutil.copy("greetings-windows.exe", "C:\\Program Files\\widkit\\greetings\\greetings.exe") # Copies itself into Program Files.
 
     # Clean up.
