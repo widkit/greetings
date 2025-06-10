@@ -5,7 +5,7 @@
 ![greetings](https://github.com/user-attachments/assets/507ac856-4298-4fb6-ae2c-14ece783654b)
 
 ![Python Version](https://img.shields.io/badge/python-3.10+-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
+![License](https://img.shields.io/badge/license-GPLv3-blue)
 ![Release](https://img.shields.io/github/v/release/widkit/greetings)
 ![Issues](https://img.shields.io/github/issues/widkit/greetings)
 ![Platform](https://img.shields.io/badge/platform-linux%20%7C%20macos%20%7C%20windows-lightgrey)
