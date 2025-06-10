@@ -1,0 +1,41 @@
+# greetings configuration file
+save_images: false
+flags:
+- -C
+- --color-bg
+- -b
+#- -d
+#- 60,30
+#- -W
+#- 60
+#- -H
+#- 60
+#- -m
+#- .-+#@
+#- -g
+#- -c
+#- -f
+#- -n
+#- -x
+#- -y
+# Since PyYAML parser is sensitive to inline and in between comments, flags must be moved just after the active flags.
+# Flag descriptions:
+# -C                Display ascii art with original colors
+# --color-bg        Use color on character background
+# -b                Use braille characters
+# -g                Display grayscale ascii art
+# -c                Use more ascii chars
+# -f                Use largest dimensions
+# -n                Negative colors
+# -x                Flip horizontally
+# -y                Flip vertically
+#
+# The following flags must be used in two separate lines:
+# Example:
+# -d
+# 60,30
+#
+# -d 60,30          Set width and height for ascii art
+# -W 60             Set width for ascii art
+# -H 60             Set height for ascii art
+# -m .-+#@          Custom ascii characters
