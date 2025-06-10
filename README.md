@@ -14,7 +14,7 @@
 
 </div>
 
-A simple Python script that fetches the daily Bing wallpaper and converts it to colorful ASCII art using [ascii-image-converter](https://github.com/TheZoraiz/ascii-image-converter).
+A simple Python script that fetches the daily Bing wallpaper and converts it to colorful ASCII art using [ascii-image-converter](https://github.com/widkit/ascii-image-converter).
 
 ## Quick Links
 
@@ -59,7 +59,7 @@ Requirements:
 * [requests](https://pypi.org/project/requests/)
 * [pytz](https://github.com/stub42/pytz)
 
-The program will automatically download and install the required [ascii-image-converter](https://github.com/TheZoraiz/ascii-image-converter) binary for your system on first run.
+The program will automatically download and install the required [ascii-image-converter](https://github.com/widkit/ascii-image-converter) binary for your system on first run.
 
 Clone the repository:
 ```bash
