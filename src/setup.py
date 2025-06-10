@@ -40,10 +40,8 @@ def main():
     # Detect the architecture and the OS, set the release name 
     match system:
         case 'WINDOWS':
-            if os.getuid() == 0:
-                print("Running as administrator.")
-            else:
-                print("Please run the program with administrator rights for setup.")
+            if not ctypes.windll.shell32.IsUserAnAdmin() or os.getuid() == 0:
+                print("Please run the program as administrator for the setup.")
                 sys.exit(1)
             useFile = True
             match machine:
