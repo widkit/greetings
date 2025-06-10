@@ -32,7 +32,7 @@ After downloading:
    .\greetings-windows.exe
    ```
 > [!NOTE]  
-> On Windows, the binary must be executed with admin rights.
+> On Windows, the installer must be executed with administrator privileges. These privileges are not required for the application to run after installation.
    ```bash
    # Linux/macOS
    ./greetings-linux  # or ./greetings-macos
