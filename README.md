@@ -4,12 +4,13 @@
 
 ![greetings](https://github.com/user-attachments/assets/507ac856-4298-4fb6-ae2c-14ece783654b)
 
-![Python Version](https://img.shields.io/badge/python-3.10+-blue)
-![License](https://img.shields.io/badge/license-GPLv3-blue)
-![Release](https://img.shields.io/github/v/release/widkit/greetings)
-![Issues](https://img.shields.io/github/issues/widkit/greetings)
-![Platform](https://img.shields.io/badge/platform-linux%20%7C%20macos%20%7C%20windows-lightgrey)
+![Python Version](https://img.shields.io/badge/python-3.10+-3776AB)
+![License](https://img.shields.io/badge/license-GPLv3-4CAF50)
+![Release](https://img.shields.io/github/v/release/widkit/greetings?color=F39C12)
+![Issues](https://img.shields.io/github/issues/widkit/greetings?color=E74C3C)
+![Platform](https://img.shields.io/badge/platform-linux%20%7C%20macos%20%7C%20windows-8E44AD)
 ![ASCII Art](https://img.shields.io/badge/ascii-art-FF69B4)
+
 
 </div>
 
