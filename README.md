@@ -17,19 +17,13 @@ A simple Python script that fetches the daily Bing wallpaper and converts it to 
 
 ## Quick Links
 
-<p align="center">
-
-|   |
-|---|
-| [Installation](#installation) |
-| [Using the script](#using-the-script) |
-| [Using as a color script](#using-as-a-color-script) |
-| [Tips](#tips) |
-| [Customization](#customization) |
-| [Available Flags](#available-flags) |
-| [Full Manpage](#full-manpage) |
-
-</p>
+- [Installation](#installation)
+- [Using the script](#using-the-script)
+- [Using as a color script](#using-as-a-color-script)
+- [Tips](#tips)
+- [Customization](#customization)
+  - [Available Flags](#available-flags)
+- [Full Manpage](#full-manpage)
 
 ## Installation
 
