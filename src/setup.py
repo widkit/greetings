@@ -1,5 +1,54 @@
 import os, subprocess, platform, shutil, tarfile, zipfile, yaml, sys, requests, ctypes
 
+def create_default_config():
+    home_dir = os.path.expanduser("~")
+    config_dir = os.path.join(home_dir, ".config/greetings")
+    config_file = os.path.join(config_dir, "greetings.yaml")
+    config_text = '''# greetings configuration file
+save_images: false
+flags:
+- -C
+- --color-bg
+- -b
+#- -d
+#- 60,30
+#- -W
+#- 60
+#- -H
+#- 60
+#- -m
+#- .-+#@
+#- -g
+#- -c
+#- -f
+#- -n
+#- -x
+#- -y
+# Since PyYAML parser is sensitive to inline and in between comments, flags must be moved just after the active flags.
+# Flag descriptions:
+# -C                Display ascii art with original colors
+# --color-bg        Use color on character background
+# -b                Use braille characters
+# -g                Display grayscale ascii art
+# -c                Use more ascii chars
+# -f                Use largest dimensions
+# -n                Negative colors
+# -x                Flip horizontally
+# -y                Flip vertically
+#
+# The following flags must be used in two separate lines:
+# Example:
+# -d
+# 60,30
+#
+# -d 60,30          Set width and height for ascii art
+# -W 60             Set width for ascii art
+# -H 60             Set height for ascii art
+# -m .-+#@          Custom ascii characters
+'''
+    with open(config_file, 'w') as f:
+        f.write(config_text)
+
 def main():
     # Detect the operating system and architecture to select the correct binary for ascii-image-converter.
     system = platform.system().upper()
@@ -12,19 +61,16 @@ def main():
     home_dir = os.path.expanduser("~")
     config_dir = os.path.join(home_dir, ".config/greetings")
 
-    if not os.path.exists(config_dir): # Create files if does not exist.
+    config_file = os.path.join(config_dir, "greetings.yaml") # Define files.
+    date_dir_file = os.path.join(config_dir, "date.txt")
+    if not os.path.exists(config_dir):
         print(f"Creating files at: {config_dir}")
-        os.makedirs(config_dir, exist_ok=True)
+        os.makedirs(config_dir, exist_ok=True) # Create config directories.
         os.makedirs(os.path.join(config_dir, "images"))
-        config_file = os.path.join(config_dir, "greetings.yaml")
-        date_dir_file = os.path.join(config_dir, "date.txt")
         open(date_dir_file, 'w').close() # Create date file.
-        default_config = {
-                'save_images': False,
-                'flags': ["--color", "--color-bg", "-b"]
-            }
-        with open(config_file, 'w') as f: # Write the default config.
-            yaml.safe_dump(default_config, f, default_flow_style=False)
+        create_default_config()
+    elif not os.path.exists(config_file):
+        create_default_config()
 
     # Fetch the latest release of ascii-image-converter from GitHub using requests.
     try:

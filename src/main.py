@@ -1,4 +1,5 @@
 from datetime import datetime; import os, subprocess, requests, pytz, platform, yaml, sys
+from setup import create_default_config
 
 # Check if running as PyInstaller binary.
 def is_binary():
@@ -10,32 +11,24 @@ config_dir = os.path.join(home_dir, ".config/greetings")
 date_dir_file = os.path.join(config_dir, "date.txt")
 config_file = os.path.join(config_dir, "greetings.yaml")
 
-def createConfig(): # Create the config file with defaults.
-    default_config = {
-            'save_images': False,
-            'flags': ["--color", "--color-bg", "-b"]
-        }
-    with open(config_file, 'w') as f: 
-        yaml.safe_dump(default_config, f, default_flow_style=False)
-
 # Create config directory and files if they don't exist.
 if not os.path.exists(config_dir):
     os.makedirs(config_dir, exist_ok=True)
     os.makedirs(os.path.join(config_dir, "images"))
     open(date_dir_file, 'w').close()
-    createConfig()
+    create_default_config()
 
 # Read configuration.
 try:
     with open(config_file, 'r') as f:
         config = yaml.safe_load(f)
-        save_images = config.get('save_images', False) # Get config parameters and set defaults in case the load fails.
-        flags = config.get('flags', ["--color", "--color-bg", "-b"])        
+        save_images = config.get('save_images', False)
+        flags = config.get('flags', ["-C", "--color-bg", "-b"])
 except (FileNotFoundError, yaml.YAMLError):
-    print("No config file found. Using default settings.") # Fallback in case above function fails (it does if the file does not exist).
+    print("Config file is corrupted. Using default settings.")
     save_images = False
-    flags = ["--color", "--color-bg", "-b"]
-    createConfig()
+    flags = ["-C", "--color-bg", "-b"] # Fallback defaults.
+    create_default_config() # from setup.py
 
 # Check if running on Windows
 isWindows = platform.system().upper() == 'WINDOWS'
