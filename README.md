@@ -26,16 +26,17 @@ After downloading:
    chmod +x greetings-linux  # or greetings-macos
    ```
 2. Run the executable:
+
    ```bash
    # Windows
-   greetings-windows.exe
+   .\greetings-windows.exe
    ```
+> [!NOTE]  
+> On Windows, the binary must be executed with admin rights.
    ```bash
    # Linux/macOS
    ./greetings-linux  # or ./greetings-macos
    ```
-
-   For Windows, the script uses the downloaded binary file, without installing.
 
 ### Option 2: From Source
 Requirements:
