@@ -1,15 +1,8 @@
 # greetings
 
-A simple Python script that fetches the daily Bing wallpaper and converts it to colorful ASCII art using [ascii-image-converter](https://github.com/TheZoraiz/ascii-image-converter).
+<div align="center">
 
-## Quick Links
-- [Installation](#installation)
-- [Using the script](#using-the-script)
-- [Using as a color script](#using-as-a-color-script)
-- [Tips](#tips)
-- [Customization](#customization)
-  - [Available Flags](#available-flags)
-- [Full Manpage](#full-manpage)
+![greetings](https://github.com/user-attachments/assets/507ac856-4298-4fb6-ae2c-14ece783654b)
 
 ![Python Version](https://img.shields.io/badge/python-3.10+-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
@@ -18,9 +11,22 @@ A simple Python script that fetches the daily Bing wallpaper and converts it to 
 ![Platform](https://img.shields.io/badge/platform-linux%20%7C%20macos%20%7C%20windows-lightgrey)
 ![ASCII Art](https://img.shields.io/badge/ascii-art-FF69B4)
 
-A Python program that works on Mac, Linux and Windows which fetches the daily Bing wallpaper and converts it into colorful ASCII art. It may be used with shells as a color script, as seen in DistroTube's Youtube channel.
+</div>
 
-![greetings](https://github.com/user-attachments/assets/507ac856-4298-4fb6-ae2c-14ece783654b)
+A simple Python script that fetches the daily Bing wallpaper and converts it to colorful ASCII art using [ascii-image-converter](https://github.com/TheZoraiz/ascii-image-converter).
+
+## Quick Links
+<div align="center">
+
+- [Installation](#installation)
+- [Using the script](#using-the-script)
+- [Using as a color script](#using-as-a-color-script)
+- [Tips](#tips)
+- [Customization](#customization)
+  - [Available Flags](#available-flags)
+- [Full Manpage](#full-manpage)
+
+</div>
 
 ## Installation
 
