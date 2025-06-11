@@ -10,6 +10,7 @@ home_dir = os.path.expanduser("~")
 config_dir = os.path.join(home_dir, ".config/greetings")
 date_dir_file = os.path.join(config_dir, "date.txt")
 config_file = os.path.join(config_dir, "greetings.yaml")
+cache_file = os.path.join(config_dir, "cache.greetings")
 
 # Create config directory and files if they don't exist.
 if not os.path.exists(config_dir):
@@ -73,7 +74,22 @@ try:
 except FileNotFoundError:
     last_date = "" # Fallback in case the file does not exist.
 
-if last_date != date_utc or not os.path.exists(image_file): # Fetch image if the image file does not exist or the date has changed. 
+# Determine if we can use the cached image: date must match and image file must exist.
+useCache = (last_date == date_utc) and os.path.exists(image_file)
+
+# Fetch the image.
+if useCache:
+    try: # Fetch and write image.
+        if isWindows:
+            subprocess.run(["type", cache_file], check=True)
+            sys.exit(0)
+        else:
+            subprocess.run(["cat", cache_file], check=True)
+            sys.exit(0)
+    except Exception as e:
+        print(f"Error printing cached image: {e}")
+        sys.exit(1)
+else:
     if not save_images and os.path.isfile(image_file):
         os.remove(image_file)
     try: # Fetch and write image.
@@ -95,7 +111,7 @@ if last_date != date_utc or not os.path.exists(image_file): # Fetch image if the
 # Convert the image to colorful ASCII using ascii-image-converter and print it.
 try:
     binary_name = r"C:\Program Files\widkit\ascii-image-converter\ascii-image-converter.exe" if isWindows else "ascii-image-converter" # Use the binary name depending on the OS
-    subprocess.run([binary_name, *flags, image_file], check=True)
+    subprocess.run([binary_name, image_file, *flags, "--save-txt", ""], check=True)
 except subprocess.CalledProcessError as e:
     print(f"Error running ascii-image-converter: {e}")
     sys.exit(1)
