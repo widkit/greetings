@@ -171,7 +171,7 @@ def main():
             unixOS = 'linux'
         elif system == 'DARWIN':
             unixOS = 'macos'
-        binary_path = os.path.join(extract_dir, releaseName.replace('.tar.gz', ''), 'ascii-image-converter')
+        binary_path = os.path.join(extract_dir, 'ascii-image-converter')
         subprocess.run(["chmod", "+x", binary_path], check=True)
         try:
             print("Moving the binaries to /usr/local/bin (you may be prompted for your password)...")

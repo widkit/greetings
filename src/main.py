@@ -86,8 +86,7 @@ try:
 except FileNotFoundError:
     useCache = False
 except Exception as e:
-    print("Error reading the cached terminal size: e")
-
+    print(f"Error reading the cached terminal size: {e}")
 
 # Fetch the image.
 if useCache and f"{terminalSizeTuple.columns},{terminalSizeTuple.lines}" == termSize:
@@ -119,7 +118,7 @@ else:
     except requests.RequestException as e:
         print(f"Error fetching image: {e}")
         sys.exit(1)
-        # Convert the image to colorful ASCII using ascii-image-converter and print it.
+    # Convert the image to colorful ASCII using ascii-image-converter and print it.
     try:
         binary_name = r"C:\Program Files\widkit\ascii-image-converter\ascii-image-converter.exe" if isWindows else "ascii-image-converter" # Use the binary name depending on the OS
         subprocess.run([binary_name, image_file, *flags, "--save-txt", config_dir], check=True) # Call ascii-image-converter.
@@ -128,4 +127,3 @@ else:
     except subprocess.CalledProcessError as e:
         print(f"Error running ascii-image-converter: {e}")
         sys.exit(1)
-
