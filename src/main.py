@@ -1,4 +1,4 @@
-from datetime import datetime; import os, subprocess, requests, pytz, platform, yaml, sys
+from datetime import datetime; import os, subprocess, requests, pytz, platform, yaml, sys, shutil
 from setup import create_default_config
 
 # Check if running as PyInstaller binary.
@@ -11,6 +11,7 @@ config_dir = os.path.join(home_dir, ".config/greetings")
 date_dir_file = os.path.join(config_dir, "date.txt")
 config_file = os.path.join(config_dir, "greetings.yaml")
 cache_file = os.path.join(config_dir, "cache.greetings")
+term_size_file = os.path.join(config_dir, ".terminalsize")
 
 # Create config directory and files if they don't exist.
 if not os.path.exists(config_dir):
@@ -77,11 +78,22 @@ except FileNotFoundError:
 # Determine if we can use the cached image: date must match and image file must exist.
 useCache = (last_date == date_utc) and os.path.exists(image_file)
 
+# Get the terminal size to check if we can use the cached art.
+terminalSizeTuple = shutil.get_terminal_size((80,20))
+try:
+    with open(term_size_file, "r") as sizeFileObj:
+        termSize = sizeFileObj.read().strip()  # Remove any newline
+except FileNotFoundError:
+    useCache = False
+except Exception as e:
+    print("Error reading the cached terminal size: e")
+
+
 # Fetch the image.
-if useCache:
+if useCache and f"{terminalSizeTuple.columns},{terminalSizeTuple.lines}" == termSize:
     try: # Fetch and write image.
         if isWindows:
-            subprocess.run(["type", cache_file], check=True)
+            subprocess.run(f'type "{cache_file}"', shell=True, check=True) # Windows does not have cat by default.
             sys.exit(0)
         else:
             subprocess.run(["cat", cache_file], check=True)
@@ -107,11 +119,13 @@ else:
     except requests.RequestException as e:
         print(f"Error fetching image: {e}")
         sys.exit(1)
+        # Convert the image to colorful ASCII using ascii-image-converter and print it.
+    try:
+        binary_name = r"C:\Program Files\widkit\ascii-image-converter\ascii-image-converter.exe" if isWindows else "ascii-image-converter" # Use the binary name depending on the OS
+        subprocess.run([binary_name, image_file, *flags, "--save-txt", config_dir], check=True) # Call ascii-image-converter.
+        with open(term_size_file, "w") as sizeFile: # Write the terminal size for the cached art.
+            sizeFile.write(f"{terminalSizeTuple.columns},{terminalSizeTuple.lines}")
+    except subprocess.CalledProcessError as e:
+        print(f"Error running ascii-image-converter: {e}")
+        sys.exit(1)
 
-# Convert the image to colorful ASCII using ascii-image-converter and print it.
-try:
-    binary_name = r"C:\Program Files\widkit\ascii-image-converter\ascii-image-converter.exe" if isWindows else "ascii-image-converter" # Use the binary name depending on the OS
-    subprocess.run([binary_name, image_file, *flags, "--save-txt", ""], check=True)
-except subprocess.CalledProcessError as e:
-    print(f"Error running ascii-image-converter: {e}")
-    sys.exit(1)
