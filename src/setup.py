@@ -1,4 +1,4 @@
-import os, subprocess, platform, shutil, tarfile, zipfile, yaml, sys, requests, ctypes
+import os, subprocess, platform, shutil, tarfile, zipfile, sys, requests, ctypes
 
 def create_default_config():
     home_dir = os.path.expanduser("~")
@@ -61,6 +61,11 @@ def main():
     home_dir = os.path.expanduser("~")
     config_dir = os.path.join(home_dir, ".config/greetings")
 
+    # Install target
+    targetDir = os.path.join(home_dir, ".local/bin/")
+    asciiTarget = os.path.join(targetDir, "ascii-image-converter")
+    greetingsTarget = os.path.join(targetDir, "greetings")
+
     config_file = os.path.join(config_dir, "greetings.yaml") # Define files.
     date_dir_file = os.path.join(config_dir, "date.txt")
     if not os.path.exists(config_dir):
@@ -68,7 +73,7 @@ def main():
         os.makedirs(config_dir, exist_ok=True) # Create config directories.
         os.makedirs(os.path.join(config_dir, "images"))
         open(date_dir_file, 'w').close() # Create date file.
-        create_default_config()
+        create_default_config() 
     elif not os.path.exists(config_file):
         create_default_config()
 
@@ -171,15 +176,20 @@ def main():
             unixOS = 'linux'
         elif system == 'DARWIN':
             unixOS = 'macos'
-        binary_path = os.path.join(extract_dir, 'ascii-image-converter')
-        subprocess.run(["chmod", "+x", binary_path], check=True)
+        binary_path = os.path.join(extract_dir, releaseName.replace('.tar.gz', '').replace('.zip', ''), 'ascii-image-converter')
+        subprocess.run(["chmod", "+x", binary_path], check=True) # Set as executable.
+        greetingsSrc = os.path.join(script_dir, f"greetings-{unixOS}")
         try:
-            print("Moving the binaries to /usr/local/bin (you may be prompted for your password)...")
-            subprocess.run(["sudo", "mv", binary_path, "/usr/local/bin/ascii-image-converter"], check=True)
-            subprocess.run(["sudo", "cp", f"greetings-{unixOS}", "/usr/local/bin/greetings"], check=True)
+            print("Moving the binaries to ~/.local/bin...")
+            os.makedirs(targetDir, exist_ok=True)
+            shutil.move(binary_path, asciiTarget)
+            shutil.copy2(greetingsSrc, greetingsTarget)
         except Exception as e:
-            print(f"Failed to move binaries: {e}")
-            sys.exit(1)
+                print(f"Failed to move binaries: {e}")
+                sys.exit(1)
+        path_env = os.environ.get('PATH', '')
+        if targetDir not in path_env.split(os.pathsep):
+            print("Warn: ~/.local/bin not in PATH! Please add it to your PATH for the program to work correctly.")
     else: # Windows
         os.makedirs("C:\\Program Files\\widkit\\ascii-image-converter", exist_ok=True) # Make directories for ascii-image-converter and greetings.
         os.makedirs("C:\\Program Files\\widkit\\greetings", exist_ok=True)
