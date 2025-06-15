@@ -187,6 +187,9 @@ def main():
         except Exception as e:
                 print(f"Failed to move binaries: {e}")
                 sys.exit(1)
+        path_env = os.environ.get('PATH', '')
+        if targetDir not in path_env.split(os.pathsep):
+            print("Warn: ~/.local/bin not in PATH! Please add it to your PATH for the program to work correctly.")
     else: # Windows
         os.makedirs("C:\\Program Files\\widkit\\ascii-image-converter", exist_ok=True) # Make directories for ascii-image-converter and greetings.
         os.makedirs("C:\\Program Files\\widkit\\greetings", exist_ok=True)
