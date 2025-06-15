@@ -1,4 +1,4 @@
-import os, subprocess, platform, shutil, tarfile, zipfile, yaml, sys, requests, ctypes
+import os, subprocess, platform, shutil, tarfile, zipfile, sys, requests, ctypes
 
 def create_default_config():
     home_dir = os.path.expanduser("~")
