@@ -26,25 +26,25 @@ flags:
 #- -y
 # Since PyYAML parser is sensitive to inline and in between comments, flags must be moved just after the active flags.
 # Flag descriptions:
-# -C                Display ascii art with original colors
-# --color-bg        Use color on character background
-# -b                Use braille characters
-# -g                Display grayscale ascii art
-# -c                Use more ascii chars
-# -f                Use largest dimensions
-# -n                Negative colors
-# -x                Flip horizontally
-# -y                Flip vertically
+# -C          Display ascii art with original colors
+# --color-bg  Use color on character background
+# -b          Use braille characters
+# -g          Display grayscale ascii art
+# -c          Use more ascii chars
+# -f          Use largest dimensions
+# -n          Negative colors
+# -x          Flip horizontally
+# -y          Flip vertically
 #
 # The following flags must be used in two separate lines:
 # Example:
 # -d
 # 60,30
 #
-# -d 60,30          Set width and height for ascii art
-# -W 60             Set width for ascii art
-# -H 60             Set height for ascii art
-# -m .-+#@          Custom ascii characters
+# -d 60,30    Set width and height for ascii art
+# -W 60       Set width for ascii art
+# -H 60       Set height for ascii art
+# -m .-+#@    Custom ascii characters
 '''
     with open(config_file, 'w') as f:
         f.write(config_text)
@@ -73,7 +73,7 @@ def main():
         os.makedirs(config_dir, exist_ok=True) # Create config directories.
         os.makedirs(os.path.join(config_dir, "images"))
         open(date_dir_file, 'w').close() # Create date file.
-        create_default_config() 
+        create_default_config()
     elif not os.path.exists(config_file):
         create_default_config()
 
@@ -149,20 +149,43 @@ def main():
 
     # Extract the downloaded file.
     extract_dir = os.path.join(config_dir, "ascii-image-converter")
-    if releaseName.endswith(".zip"): # Extracts the correct file with correct library. 
+    binary_path = None # Initialize binary_path to None
+    
+    if releaseName.endswith(".zip"): # Extracts the correct file with correct library.
         try:
             with zipfile.ZipFile(outputFile, 'r') as zip_ref:
                 zip_ref.extractall(extract_dir)
             print("File extracted successfully.")
+            
+            # Search for the executable in the extracted directory
+            for root, _, files in os.walk(extract_dir):
+                for file in files:
+                    if file == ('ascii-image-converter.exe' if system == 'WINDOWS' else 'ascii-image-converter'):
+                        binary_path = os.path.join(root, file)
+                        break
+                if binary_path:
+                    break # Found it, stop searching
+
         except Exception as e:
             print(f"Error extracting file: {e}")
             sys.exit(1)
 
     elif releaseName.endswith(".tar.gz"):
         try:
+            # Add filter='data' to prevent the DeprecationWarning in Python 3.14+
             with tarfile.open(outputFile, "r:gz") as tar_ref:
-                tar_ref.extractall(extract_dir)
+                tar_ref.extractall(extract_dir, filter='data') 
             print("File extracted successfully.")
+            
+            # Search for the executable in the extracted directory
+            for root, _, files in os.walk(extract_dir):
+                for file in files:
+                    if file == 'ascii-image-converter':
+                        binary_path = os.path.join(root, file)
+                        break
+                if binary_path:
+                    break # Found it, stop searching
+
         except Exception as e:
             print(f"Error extracting file: {e}")
             sys.exit(1)
@@ -176,8 +199,18 @@ def main():
             unixOS = 'linux'
         elif system == 'DARWIN':
             unixOS = 'macos'
-        binary_path = os.path.join(extract_dir, releaseName.replace('.tar.gz', '').replace('.zip', ''), 'ascii-image-converter')
-        subprocess.run(["chmod", "+x", binary_path], check=True) # Set as executable.
+        
+        # Verify binary_path was found during extraction
+        if not binary_path or not os.path.exists(binary_path):
+            print(f"Error: Expected binary 'ascii-image-converter' not found after extraction in '{extract_dir}'.")
+            sys.exit(1)
+
+        try:
+            subprocess.run(["chmod", "+x", binary_path], check=True) # Set as executable.
+        except subprocess.CalledProcessError as e:
+            print(f"Failed to set executable permissions on '{binary_path}': {e}")
+            sys.exit(1)
+
         greetingsSrc = os.path.join(script_dir, f"greetings-{unixOS}")
         try:
             print("Moving the binaries to ~/.local/bin...")
@@ -193,7 +226,12 @@ def main():
     else: # Windows
         os.makedirs("C:\\Program Files\\widkit\\ascii-image-converter", exist_ok=True) # Make directories for ascii-image-converter and greetings.
         os.makedirs("C:\\Program Files\\widkit\\greetings", exist_ok=True)
-        binary_path = os.path.join(extract_dir, releaseName.replace('.zip', ''), 'ascii-image-converter.exe')
+        
+        # Verify binary_path was found during extraction
+        if not binary_path or not os.path.exists(binary_path):
+            print(f"Error: Expected binary 'ascii-image-converter.exe' not found after extraction in '{extract_dir}'.")
+            sys.exit(1)
+
         shutil.move(binary_path, "C:\\Program Files\\widkit\\ascii-image-converter\\ascii-image-converter.exe") # Moves the file.
         shutil.copy("greetings-windows.exe", "C:\\Program Files\\widkit\\greetings\\greetings.exe") # Copies itself into Program Files.
 
