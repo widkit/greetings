@@ -55,7 +55,10 @@ def main():
     machine = platform.machine().upper()
 
     # Get the directory where the script is located.
-    script_dir = os.path.dirname(os.path.abspath(__file__))
+    if getattr(sys, 'frozen', False):
+        script_dir = os.path.dirname(sys.executable)
+    else:
+        script_dir = os.path.dirname(os.path.abspath(__file__))
 
     # Get home directory and config paths.
     home_dir = os.path.expanduser("~")
@@ -216,7 +219,10 @@ def main():
             print("Moving the binaries to ~/.local/bin...")
             os.makedirs(targetDir, exist_ok=True)
             shutil.move(binary_path, asciiTarget)
-            shutil.copy2(greetingsSrc, greetingsTarget)
+            try:
+                shutil.copy2(greetingsSrc, greetingsTarget)
+            except Exception as e:
+                print(f"Error: {e}")
         except Exception as e:
                 print(f"Failed to move binaries: {e}")
                 sys.exit(1)
@@ -233,8 +239,10 @@ def main():
             sys.exit(1)
 
         shutil.move(binary_path, "C:\\Program Files\\widkit\\ascii-image-converter\\ascii-image-converter.exe") # Moves the file.
-        shutil.copy("greetings-windows.exe", "C:\\Program Files\\widkit\\greetings\\greetings.exe") # Copies itself into Program Files.
-
+        try:
+            shutil.copy("greetings-windows.exe", "C:\\Program Files\\widkit\\greetings\\greetings.exe") # Copies itself into Program Files.
+        except Exception:
+            pass
     # Clean up.
     print("Cleaning up...")
     try:

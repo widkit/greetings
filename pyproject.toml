@@ -1,0 +1,22 @@
+[project]
+name = "greetings"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "widkit",email = "exylloath@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "requests (>=2.32.4,<3.0.0)",
+    "pytz (>=2025.2,<2026.0)",
+    "pyyaml (>=6.0.2,<7.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "greetings", from = "src"}]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
