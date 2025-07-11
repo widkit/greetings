@@ -52,6 +52,8 @@ After downloading:
    # Linux/macOS
    ./greetings-linux  # or ./greetings-macos
    ```
+> [!NOTE]  
+> The binaries will be moved to ~/.local/bin. Make sure you add it to your PATH if not already added.
 
 ### Option 2: From Source
 Requirements:
@@ -70,15 +72,20 @@ cd into `greetings`:
 ```bash
 cd greetings
 ```
-Install dependencies via pip:
+Install dependencies via poetry:
 
 ```bash
-pip install -r requirements.txt
+poetry install
 ```
 
 ## Using the script
 ```bash
-python3 src/main.py
+python3 src/greetings/main.py
+```
+
+### Building the script
+```bash
+pyinstaller --onefile src/greetings/main.py
 ```
 
 ## Using as a color script (runs at shell start-up)
