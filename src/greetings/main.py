@@ -104,7 +104,11 @@ else:
     if not save_images and os.path.isfile(image_file):
         os.remove(image_file)
     try: # Fetch and write image.
-        res = requests.get('https://bing.biturl.top/', timeout=10)
+
+        headers = {
+             "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
+        }
+        res = requests.get('https://bing.biturl.top/', timeout=10, headers=headers)
         res.raise_for_status()
         link = res.json().get("url") # Get the URL to the image.
         if not link: # Exit if the response does not contain the image URL.
