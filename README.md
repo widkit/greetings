@@ -14,7 +14,7 @@
 
 </div>
 
-A simple Python script that fetches the daily Bing wallpaper and converts it to colorful ASCII art using [ascii-image-converter](https://github.com/widkit/ascii-image-converter).
+A simple Python script that fetches a picture from Bing or Picsum daily, and converts it to colorful ASCII art using [ascii-image-converter](https://github.com/widkit/ascii-image-converter).
 
 ## Quick Links
 
