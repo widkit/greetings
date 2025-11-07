@@ -1,4 +1,4 @@
-import os, subprocess, platform, shutil, tarfile, zipfile, sys, requests, ctypes
+import os, subprocess, platform, shutil, tarfile, zipfile, sys, requests, ctypes, yaml
 
 def create_default_config():
     home_dir = os.path.expanduser("~")
@@ -6,6 +6,7 @@ def create_default_config():
     config_file = os.path.join(config_dir, "greetings.yaml")
     config_text = '''# greetings configuration file
 save_images: false
+api: bing
 flags:
 - -C
 - --color-bg
@@ -243,7 +244,30 @@ def main():
             shutil.copy("greetings-windows.exe", "C:\\Program Files\\widkit\\greetings\\greetings.exe") # Copies itself into Program Files.
         except Exception:
             pass
-    # Clean up.
+    while True:
+        srcApi = input("API to use [(b)ing/(p)icsum]: ").lower()
+        if srcApi in ["b", "bing"]:
+            newApi = "bing"
+            break
+        elif srcApi in ["p", "picsum"]:
+            newApi = "picsum"
+            break
+        else:
+            print("Unknown option. [(b)ing/(p)icsum]: ")
+
+    with open(config_file, 'r') as f:
+        lines = f.readlines()
+
+    for i, line in enumerate(lines):
+        if line.strip().startswith('api:'):
+            lines[i] = f"api: {newApi}\n"
+            break
+
+    with open(config_file, 'w') as f:
+        f.writelines(lines)
+
+    print(f"{newApi.capitalize()} was selected as the preferred API. You might change this setting any time by editing ~/.config/greetings/greetings.yaml.")
+
     print("Cleaning up...")
     try:
         shutil.rmtree(extract_dir) # Delete downloaded files.

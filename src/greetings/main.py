@@ -25,10 +25,12 @@ try:
     with open(config_file, 'r') as f:
         config = yaml.safe_load(f)
         save_images = config.get('save_images', False)
+        api = config.get('api', 'bing')
         flags = config.get('flags', ["-C", "--color-bg", "-b"])
 except (FileNotFoundError, yaml.YAMLError):
     print("Config file is corrupted. Using default settings.")
     save_images = False
+    api = 'bing'
     flags = ["-C", "--color-bg", "-b"] # Fallback defaults.
     create_default_config() # from setup.py
 
@@ -104,17 +106,22 @@ else:
     if not save_images and os.path.isfile(image_file):
         os.remove(image_file)
     try: # Fetch and write image.
-
         headers = {
              "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
         }
-        res = requests.get('https://bing.biturl.top/', timeout=10, headers=headers)
-        res.raise_for_status()
-        link = res.json().get("url") # Get the URL to the image.
-        if not link: # Exit if the response does not contain the image URL.
-            print("Error: No image URL found in response")
-            sys.exit(1)
-        daily_image = requests.get(link, timeout=10).content
+        if api == 'picsum':
+            width, height = terminalSizeTuple
+            picsum_url = f"https://picsum.photos/{width*10}/{height*10}"
+            daily_image = requests.get(picsum_url, timeout=10).content
+        else: # Default to bing
+            res = requests.get('https://bing.biturl.top/', timeout=10, headers=headers)
+            res.raise_for_status()
+            link = res.json().get("url") # Get the URL to the image.
+            if not link: # Exit if the response does not contain the image URL.
+                print("Error: No image URL found in response")
+                sys.exit(1)
+            daily_image = requests.get(link, timeout=10).content
+
         with open(image_file, 'wb') as handler: # Write to disk.
             handler.write(daily_image)
         with open(date_dir_file, "w") as f: # Update last fetched date.
