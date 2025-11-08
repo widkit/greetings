@@ -1,5 +1,6 @@
 # greetings configuration file
 save_images: false
+api: bing
 flags:
 - -C
 - --color-bg
